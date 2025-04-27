@@ -1,0 +1,93 @@
+{% extends "base.html" %} {% block content %}
+<div>
+  <div class="flex justify-between items-center mb-8">
+    <h2 class="text-3xl font-bold flex items-center">
+      <i class="fas fa-terminal text-blue-400 mr-3"></i>
+      Admin Dashboard
+    </h2>
+    <div class="flex space-x-4">
+      <button
+        class="cyber-border hover:cyber-glow text-black font-bold py-2 px-4 rounded-lg transition-all"
+      >
+        <i class="fas fa-sync-alt mr-2"></i> Refresh
+      </button>
+      <button
+        class="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-black font-bold py-2 px-4 rounded-lg transition-all transform hover:scale-[1.02] shadow-lg shadow-blue-500/20"
+      >
+        <i class="fas fa-download mr-2"></i> Export
+      </button>
+    </div>
+  </div>
+
+
+  <div class="cyber-border rounded-xl p-6">
+    <h3 class="text-xl font-semibold mb-4 flex items-center">
+      <i class="fas fa-list-ul text-blue-400 mr-2"></i>
+      Recent Activity Logs
+    </h3>
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="text-left border-b border-black-700">
+            <th class="pb-3">Timestamp</th>
+            <th class="pb-3">User</th>
+            <th class="pb-3">Activity</th>
+            <th class="pb-3">Details</th>
+            <th class="pb-3">IP Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in logs %}
+          <tr
+            class="border-b border-black-800 hover:bg-black-800/50 transition-colors"
+          >
+            <td class="py-3"></td>
+            <td>{{ log.username or 'System' }}</td>
+            <td>
+              <span
+                class="px-2 py-1 rounded-full text-xs {% if log.activity_type == 'login' %}bg-blue-900/50 text-blue-400 {% elif log.activity_type == 'upload' %}bg-purple-900/50 text-purple-400 {% elif log.activity_type == 'error' %}bg-red-900/50 text-red-400 {% else %}bg-black-700 text-black-300{% endif %}"
+              >
+                {{ log.activity_type }}
+              </span>
+            </td>
+            <td class="max-w-xs truncate">{{ log.description }}</td>
+            <td>{{ log.ip_address or 'N/A' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-4 flex justify-between items-center">
+      <div class="text-black-400 text-sm">
+        Showing {{ logs|length }} of 1,000 activities
+      </div>
+      <div class="flex space-x-2">
+        <button
+          class="cyber-border rounded-lg px-3 py-1 text-sm hover:cyber-glow"
+        >
+          <i class="fas fa-angle-left"></i> Previous
+        </button>
+        <button
+          class="cyber-border rounded-lg px-3 py-1 text-sm hover:cyber-glow"
+        >
+          Next <i class="fas fa-angle-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Animate table rows on load
+    anime({
+      targets: "tbody tr",
+      translateX: [-20, 0],
+      opacity: [0, 1],
+      delay: anime.stagger(50),
+      duration: 400,
+      easing: "easeOutExpo",
+    });
+  });
+</script>
+{% endblock %}

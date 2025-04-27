@@ -1,0 +1,110 @@
+{% extends "base.html" %} {% block content %}
+<div class="text-center">
+  <div class="mb-10">
+    <h2
+      class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300"
+    >
+      Digital Asset Protection
+    </h2>
+    <p class="text-xl text-black-300 max-w-3xl mx-auto">
+      Secure your documents with invisible forensic watermarks to track leaks
+      and unauthorized distribution.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+    <div class="cyber-border rounded-xl p-6 hover:cyber-glow transition-all">
+      <div class="text-blue-400 text-4xl mb-4">
+        <i class="fas fa-fingerprint"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Invisible Watermarks</h3>
+      <p class="text-black-300">
+        Embed hidden identifiers in your files without visible alteration.
+      </p>
+    </div>
+
+    <div class="cyber-border rounded-xl p-6 hover:cyber-glow transition-all">
+      <div class="text-blue-400 text-4xl mb-4">
+        <i class="fas fa-search"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Leak Detection</h3>
+      <p class="text-black-300">
+        Identify the source of leaked documents with forensic analysis.
+      </p>
+    </div>
+
+    <div class="cyber-border rounded-xl p-6 hover:cyber-glow transition-all">
+      <div class="text-blue-400 text-4xl mb-4">
+        <i class="fas fa-lock"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Secure Tracking</h3>
+      <p class="text-black-300">
+        Monitor document distribution with cryptographic signatures.
+      </p>
+    </div>
+  </div>
+
+  {% if not current_user.is_authenticated %}
+  <div
+    class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6"
+  >
+    <a
+      href="{{ url_for('auth.register') }}"
+      class="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-black font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-blue-500/20"
+    >
+      <i class="fas fa-user-plus mr-2"></i> Get Started
+    </a>
+    <a
+      href="{{ url_for('auth.login') }}"
+      class="cyber-border hover:cyber-glow text-black font-bold py-3 px-8 rounded-lg transition-all"
+    >
+      <i class="fas fa-sign-in-alt mr-2"></i> Login
+    </a>
+  </div>
+  {% else %}
+  <div>
+    <a
+      href="{{ url_for('main.dashboard') }}"
+      class="inline-block bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-black font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-blue-500/20"
+    >
+      <i class="fas fa-tachometer-alt mr-2"></i> Go to Dashboard
+    </a>
+  </div>
+  {% endif %}
+
+  <div class="mt-16 cyber-border rounded-xl p-6">
+    <h3 class="text-2xl font-semibold mb-4">How It Works</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="flex flex-col items-center text-center">
+        <div
+          class="w-16 h-16 rounded-full bg-blue-900/50 flex items-center justify-center mb-4 cyber-glow"
+        >
+          <span class="text-blue-400 text-2xl">1</span>
+        </div>
+        <h4 class="font-medium mb-2">Upload Files</h4>
+        <p class="text-black-300">Select documents to protect with watermarks</p>
+      </div>
+      <div class="flex flex-col items-center text-center">
+        <div
+          class="w-16 h-16 rounded-full bg-blue-900/50 flex items-center justify-center mb-4 cyber-glow"
+        >
+          <span class="text-blue-400 text-2xl">2</span>
+        </div>
+        <h4 class="font-medium mb-2">Watermark Embedding</h4>
+        <p class="text-black-300">Our system adds invisible forensic markers</p>
+      </div>
+      <div class="flex flex-col items-center text-center">
+        <div
+          class="w-16 h-16 rounded-full bg-blue-900/50 flex items-center justify-center mb-4 cyber-glow"
+        >
+          <span class="text-blue-400 text-2xl">3</span>
+        </div>
+        <h4 class="font-medium mb-2">Track & Monitor</h4>
+        <p class="text-black-300">
+          Identify leaks and unauthorized distribution
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

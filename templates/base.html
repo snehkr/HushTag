@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}HushTag - Cyber Watermarking{% endblock %}</title>
+    <meta name="description" content="HushTag - Cyber Watermarking" />
+    <meta name="author" content="HushTag Team" />
+    <meta name="keywords" content="HushTag, Cyber Watermarking, Security" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ url_for('static', filename='logo.png') }}"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+      .cyber-gradient {
+        background: linear-gradient(
+          135deg,
+          #0f172a 0%,
+          #1e293b 50%,
+          #0f172a 100%
+        );
+      }
+      .cyber-border {
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+      }
+      .cyber-glow:hover {
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+        transition: all 0.3s ease;
+      }
+      .scanline {
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          rgba(56, 189, 248, 0.1) 10%,
+          transparent 20%
+        );
+        background-size: 100% 8px;
+        animation: scanline 8s linear infinite;
+      }
+      @keyframes scanline {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 0 100vh;
+        }
+      }
+    </style>
+  </head>
+  <body class="cyber-gradient text-black-200 min-h-screen scanline">
+    <!-- Animated background elements -->
+    <div class="fixed inset-0 overflow-hidden opacity-20">
+      <div
+        class="absolute top-0 left-0 w-1 h-1 bg-blue-400 rounded-full"
+        id="particle-1"
+      ></div>
+      <div
+        class="absolute top-1/4 right-10 w-1 h-1 bg-blue-400 rounded-full"
+        id="particle-2"
+      ></div>
+      <div
+        class="absolute bottom-20 left-1/4 w-1 h-1 bg-blue-400 rounded-full"
+        id="particle-3"
+      ></div>
+    </div>
+
+    <!-- Main container -->
+    <div class="relative z-10 container mx-auto px-4 py-8">
+      <!-- Cyber security header -->
+      <header
+        class="flex justify-between items-center mb-12 cyber-border rounded-lg p-4 backdrop-blur-sm bg-gray-900/30"
+      >
+        <div class="flex items-center space-x-3">
+          <i class="fas fa-shield-alt text-blue-400 text-2xl"></i>
+          <h1
+            class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300"
+          >
+            <a href="{{ url_for('main.index') }}"
+              >HUSH<span class="text-black">TAG</span></a
+            >
+          </h1>
+        </div>
+        <nav class="hidden md:flex space-x-6 items-center">
+          {% if 'user_id' in session %}
+          <div class="flex items-center space-x-1 text-blue-400">
+            <i class="fas fa-user-circle"></i>
+            <span>{{ session['username'] }}</span>
+          </div>
+          <a
+            href="{{ url_for('main.dashboard') }}"
+            class="hover:text-blue-400 transition-colors"
+          >
+            <i class="fas fa-tachometer-alt mr-1"></i> Dashboard
+          </a>
+          {% if session.get('is_admin') %}
+          <a
+            href="{{ url_for('admin.view_logs') }}"
+            class="hover:text-blue-400 transition-colors"
+          >
+            <i class="fas fa-terminal mr-1"></i> Admin
+          </a>
+          {% endif %}
+          <a
+            href="{{ url_for('auth.logout') }}"
+            class="hover:text-blue-400 transition-colors"
+          >
+            <i class="fas fa-sign-out-alt mr-1"></i> Logout
+          </a>
+          {% else %}
+          <a
+            href="{{ url_for('auth.login') }}"
+            class="hover:text-blue-400 transition-colors"
+          >
+            <i class="fas fa-sign-in-alt mr-1"></i> Login
+          </a>
+          <a
+            href="{{ url_for('auth.register') }}"
+            class="hover:text-blue-400 transition-colors"
+          >
+            <i class="fas fa-user-plus mr-1"></i> Register
+          </a>
+          {% endif %}
+        </nav>
+        <button class="md:hidden text-blue-400" id="mobile-menu-button">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </header>
+
+      <!-- Mobile menu -->
+      <div
+        id="mobile-menu"
+        class="hidden cyber-border rounded-lg p-4 mb-6 bg-black-900/50 backdrop-blur-sm"
+      >
+        {% if 'user_id' in session %}
+        <a
+          href="{{ url_for('main.dashboard') }}"
+          class="block py-2 hover:text-blue-400"
+        >
+          <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+        </a>
+        {% if session.get('is_admin') %}
+        <a
+          href="{{ url_for('admin.view_logs') }}"
+          class="block py-2 hover:text-blue-400"
+        >
+          <i class="fas fa-terminal mr-2"></i> Admin
+        </a>
+        {% endif %}
+        <a
+          href="{{ url_for('auth.logout') }}"
+          class="block py-2 hover:text-blue-400"
+        >
+          <i class="fas fa-sign-out-alt mr-2"></i> Logout
+        </a>
+        {% else %}
+        <a
+          href="{{ url_for('auth.login') }}"
+          class="block py-2 hover:text-blue-400"
+        >
+          <i class="fas fa-sign-in-alt mr-2"></i> Login
+        </a>
+        <a
+          href="{{ url_for('auth.register') }}"
+          class="block py-2 hover:text-blue-400"
+        >
+          <i class="fas fa-user-plus mr-2"></i> Register
+        </a>
+        {% endif %}
+      </div>
+
+      <!-- Flash messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="mb-8">
+        {% for category, message in messages %}
+        <div
+          class="cyber-border rounded-lg p-4 mb-3 bg-black-900/50 backdrop-blur-sm border-{{ category }}-500"
+        >
+          <div class="flex items-center">
+            {% if category == 'success' %}
+            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+            {% elif category == 'danger' %}
+            <i class="fas fa-exclamation-circle text-red-400 mr-2"></i>
+            {% elif category == 'warning' %}
+            <i class="fas fa-exclamation-triangle text-yellow-400 mr-2"></i>
+            {% else %}
+            <i class="fas fa-info-circle text-blue-400 mr-2"></i>
+            {% endif %}
+            <span>{{ message }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+
+      <!-- Main content -->
+      <main
+        class="cyber-border rounded-xl p-6 md:p-8 bg-black-900/50 backdrop-blur-sm"
+      >
+        {% block content %}{% endblock %}
+      </main>
+
+      <!-- Footer -->
+      <footer class="mt-12 text-center text-black-400 text-sm">
+        <div class="cyber-border rounded-lg p-4 bg-black-900/30">
+          <p>© 2025 HushTag - Tag It Quietly. Trace It Loudly</p>
+          <div class="flex justify-center space-x-4 mt-2">
+            <a href="#" class="hover:text-blue-400"
+              ><i class="fab fa-github"></i
+            ></a>
+            <a href="#" class="hover:text-blue-400"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="#" class="hover:text-blue-400"
+              ><i class="fas fa-shield-alt"></i
+            ></a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Mobile menu toggle
+      document
+        .getElementById("mobile-menu-button")
+        .addEventListener("click", function () {
+          const menu = document.getElementById("mobile-menu");
+          menu.classList.toggle("hidden");
+        });
+
+      // Particle animations
+      document.addEventListener("DOMContentLoaded", function () {
+        // Animate background particles
+        anime({
+          targets: ["#particle-1", "#particle-2", "#particle-3"],
+          translateX: function () {
+            return anime.random(-100, 100);
+          },
+          translateY: function () {
+            return anime.random(-50, 50);
+          },
+          scale: function () {
+            return anime.random(1, 3);
+          },
+          opacity: function () {
+            return anime.random(0.3, 1);
+          },
+          duration: function () {
+            return anime.random(3000, 5000);
+          },
+          loop: true,
+          direction: "alternate",
+          easing: "easeInOutSine",
+        });
+
+        // Page load animations
+        anime({
+          targets: "main",
+          opacity: [0, 1],
+          translateY: [20, 0],
+          duration: 800,
+          easing: "easeOutExpo",
+        });
+      });
+    </script>
+  </body>
+</html>

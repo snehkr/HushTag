@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block content %}
+<div class="max-w-2xl mx-auto text-center py-16">
+  <div
+    class="cyber-border rounded-full p-6 inline-block mb-6 border-red-400/50"
+  >
+    <i class="fas fa-bug text-red-400 text-5xl"></i>
+  </div>
+  <h1 class="text-5xl font-bold mb-4">500</h1>
+  <h2 class="text-3xl font-semibold mb-6">Internal Server Error</h2>
+  <p class="text-xl text-black-300 mb-8">
+    Something went wrong on our end.
+    <br />Our team has been notified and we're working to fix it.
+  </p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto">
+    <a
+      href="{{ url_for('main.index') }}"
+      class="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-[1.02] shadow-lg shadow-blue-500/20"
+    >
+      <i class="fas fa-home mr-2"></i> Return Home
+    </a>
+    <a
+      href="#"
+      class="cyber-border hover:cyber-glow text-white font-bold py-3 px-6 rounded-lg transition-all"
+    >
+      <i class="fas fa-bolt mr-2"></i> Try Again
+    </a>
+  </div>
+
+  <div class="mt-12 cyber-border rounded-xl p-6 text-left max-w-2xl mx-auto">
+    <h3 class="text-xl font-semibold mb-4 flex items-center text-red-400">
+      <i class="fas fa-info-circle mr-2"></i>
+      Technical Details
+    </h3>
+    <div
+      class="font-mono text-sm bg-black-900/50 p-4 rounded-lg overflow-x-auto"
+    >
+      <p>Error: Internal Server Error</p>
+      <p>Time: {{ now.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+      <p class="mt-2">
+        If this problem persists, please contact our support team with the above
+        details.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Glitch effect for error page
+    const bugIcon = document.querySelector(".fa-bug");
+    setInterval(() => {
+      anime({
+        targets: bugIcon,
+        translateX: [0, anime.random(-5, 5)],
+        translateY: [0, anime.random(-5, 5)],
+        duration: 100,
+        easing: "easeInOutSine",
+      });
+    }, 2000);
+  });
+</script>
+{% endblock %}

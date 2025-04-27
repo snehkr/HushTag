@@ -1,0 +1,235 @@
+{% extends "base.html" %} {% block content %}
+<div class="max-w-md mx-auto">
+  <div class="text-center mb-8">
+    <h2 class="text-3xl font-bold mb-2 flex items-center justify-center">
+      <i class="fas fa-user-shield text-blue-400 mr-3"></i>
+      Create Account
+    </h2>
+    <p class="text-black-400">Join our secure watermarking platform</p>
+  </div>
+
+  <div
+    class="cyber-border rounded-xl p-8 bg-gradient-to-br from-black-900/50 to-black-800/30"
+  >
+    <form
+      method="POST"
+      action="{{ url_for('auth.register') }}"
+      class="space-y-6"
+    >
+      <div>
+        <label class="block text-black-400 mb-2">Username</label>
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <i class="fas fa-user-tag text-blue-400"></i>
+          </div>
+          <input
+            type="text"
+            name="username"
+            required
+            class="w-full pl-10 pr-3 py-3 bg-black-800 border border-black-700 rounded-lg focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400/30 transition-all"
+            placeholder="Choose a username"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-black-400 mb-2">Email (Optional)</label>
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <i class="fas fa-envelope text-blue-400"></i>
+          </div>
+          <input
+            type="email"
+            name="email"
+            class="w-full pl-10 pr-3 py-3 bg-black-800 border border-black-700 rounded-lg focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400/30 transition-all"
+            placeholder="your@email.com"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-black-400 mb-2">Password</label>
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <i class="fas fa-key text-blue-400"></i>
+          </div>
+          <input
+            type="password"
+            name="password"
+            required
+            class="w-full pl-10 pr-3 py-3 bg-black-800 border border-black-700 rounded-lg focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400/30 transition-all"
+            placeholder="Create a password"
+          />
+          <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+            <i
+              class="fas fa-eye-slash text-black-400 hover:text-blue-400 cursor-pointer toggle-password"
+            ></i>
+          </div>
+        </div>
+        <div class="mt-2 grid grid-cols-4 gap-2 password-strength">
+          <div class="h-1 bg-black-700 rounded-full"></div>
+          <div class="h-1 bg-black-700 rounded-full"></div>
+          <div class="h-1 bg-black-700 rounded-full"></div>
+          <div class="h-1 bg-black-700 rounded-full"></div>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-black-400 mb-2">Confirm Password</label>
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <i class="fas fa-key text-blue-400"></i>
+          </div>
+          <input
+            type="password"
+            name="confirm_password"
+            required
+            class="w-full pl-10 pr-3 py-3 bg-black-800 border border-black-700 rounded-lg focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400/30 transition-all"
+            placeholder="Confirm your password"
+          />
+        </div>
+      </div>
+
+      <div class="flex items-center">
+        <input
+          type="checkbox"
+          id="terms"
+          name="terms"
+          required
+          class="h-4 w-4 text-blue-400 focus:ring-blue-400 border-black-600 rounded bg-black-800"
+        />
+        <label for="terms" class="ml-2 block text-sm text-black-400">
+          I agree to the
+          <a href="#" class="text-blue-400 hover:text-blue-300"
+            >Terms of Service</a
+          >
+          and
+          <a href="#" class="text-blue-400 hover:text-blue-300"
+            >Privacy Policy</a
+          >
+        </label>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-black font-bold py-3 px-4 rounded-lg transition-all transform hover:scale-[1.02] shadow-lg shadow-blue-500/20"
+      >
+        <i class="fas fa-user-plus mr-2"></i> Create Account
+      </button>
+    </form>
+
+    <div class="mt-6 text-center">
+      <p class="text-black-400">
+        Already have an account?
+        <a
+          href="{{ url_for('auth.login') }}"
+          class="text-blue-400 hover:text-blue-300"
+          >Login</a
+        >
+      </p>
+    </div>
+  </div>
+
+  <div class="mt-8 cyber-border rounded-xl p-6">
+    <h4 class="text-lg font-semibold mb-3 text-center">Security Features</h4>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="flex items-center">
+        <div
+          class="p-2 rounded-full bg-black-800/50 border border-blue-400/20 mr-3"
+        >
+          <i class="fas fa-lock text-blue-400"></i>
+        </div>
+        <span class="text-sm text-black-300">End-to-end encryption</span>
+      </div>
+      <div class="flex items-center">
+        <div
+          class="p-2 rounded-full bg-black-800/50 border border-blue-400/20 mr-3"
+        >
+          <i class="fas fa-shield-alt text-blue-400"></i>
+        </div>
+        <span class="text-sm text-black-300">Military-grade security</span>
+      </div>
+      <div class="flex items-center">
+        <div
+          class="p-2 rounded-full bg-black-800/50 border border-blue-400/20 mr-3"
+        >
+          <i class="fas fa-fingerprint text-blue-400"></i>
+        </div>
+        <span class="text-sm text-black-300">Biometric authentication</span>
+      </div>
+      <div class="flex items-center">
+        <div
+          class="p-2 rounded-full bg-black-800/50 border border-blue-400/20 mr-3"
+        >
+          <i class="fas fa-cloud-download-alt text-blue-400"></i>
+        </div>
+        <span class="text-sm text-black-300">Secure cloud storage</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Password toggle
+    document
+      .querySelector(".toggle-password")
+      .addEventListener("click", function () {
+        const passwordFields = document.querySelectorAll(
+          'input[type="password"]'
+        );
+        passwordFields.forEach((field) => {
+          if (field.type === "password") {
+            field.type = "text";
+            this.classList.replace("fa-eye-slash", "fa-eye");
+          } else {
+            field.type = "password";
+            this.classList.replace("fa-eye", "fa-eye-slash");
+          }
+        });
+      });
+
+    // Password strength indicator
+    document
+      .querySelector('input[name="password"]')
+      .addEventListener("input", function () {
+        const strengthBars = document.querySelectorAll(
+          ".password-strength div"
+        );
+        const strength = Math.min(4, Math.floor(this.value.length / 3));
+
+        strengthBars.forEach((bar, index) => {
+          if (index < strength) {
+            const colors = [
+              "bg-red-400",
+              "bg-yellow-400",
+              "bg-blue-400",
+              "bg-green-400",
+            ];
+            bar.className = `h-1 ${colors[index]} rounded-full`;
+          } else {
+            bar.className = "h-1 bg-black-700 rounded-full";
+          }
+        });
+      });
+
+    // Form input animations
+    anime({
+      targets: "input, select, textarea",
+      translateY: [10, 0],
+      opacity: [0, 1],
+      delay: anime.stagger(100),
+      duration: 500,
+      easing: "easeOutExpo",
+    });
+  });
+</script>
+{% endblock %}

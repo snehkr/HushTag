@@ -1,0 +1,163 @@
+{% extends "base.html" %} {% block content %}
+<div>
+  <h2 class="text-3xl font-bold mb-6 flex items-center">
+    <i class="fas fa-tachometer-alt text-blue-400 mr-3"></i>
+    <span>Dashboard</span>
+  </h2>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Upload Section -->
+    <div class="cyber-border rounded-xl p-6">
+      <h3 class="text-xl font-semibold mb-4 flex items-center">
+        <i class="fas fa-file-upload text-blue-400 mr-2"></i>
+        Protect New File
+      </h3>
+      <form
+        method="POST"
+        action="{{ url_for('main.upload_file') }}"
+        enctype="multipart/form-data"
+        class="space-y-4"
+      >
+        <div class="cyber-border rounded-lg p-4">
+          <label class="block text-gray-400 mb-2">Select File</label>
+          <div class="flex items-center justify-center w-full">
+            <label
+              class="flex flex-col w-full h-32 border-2 border-dashed border-blue-400/30 hover:border-blue-400/50 transition-all rounded-lg cursor-pointer"
+            >
+              <div class="flex flex-col items-center justify-center pt-7">
+                <i class="fas fa-cloud-upload-alt text-blue-400 text-3xl"></i>
+                <p class="pt-1 text-sm text-gray-400">
+                  Click to browse or drag & drop
+                </p>
+              </div>
+              <input
+                type="file"
+                name="file"
+                class="opacity-0 absolute"
+                required
+              />
+            </label>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-black font-bold py-3 px-4 rounded-lg transition-all transform hover:scale-[1.02] shadow-lg shadow-blue-500/20"
+        >
+          <i class="fas fa-water mr-2"></i> Add Watermark
+        </button>
+      </form>
+    </div>
+
+    <!-- Detect Leak Section -->
+    <div class="cyber-border rounded-xl p-6">
+      <h3 class="text-xl font-semibold mb-4 flex items-center">
+        <i class="fas fa-search text-green-400 mr-2"></i>
+        Check for Leaks
+      </h3>
+      <form
+        method="POST"
+        action="{{ url_for('main.detect_leak') }}"
+        enctype="multipart/form-data"
+        class="space-y-4"
+      >
+        <div class="cyber-border rounded-lg p-4">
+          <label class="block text-gray-400 mb-2">Upload Suspicious File</label>
+          <div class="flex items-center justify-center w-full">
+            <label
+              class="flex flex-col w-full h-32 border-2 border-dashed border-green-400/30 hover:border-green-400/50 transition-all rounded-lg cursor-pointer"
+            >
+              <div class="flex flex-col items-center justify-center pt-7">
+                <i class="fas fa-search text-green-400 text-3xl"></i>
+                <p class="pt-1 text-sm text-gray-400">
+                  Upload potentially leaked file
+                </p>
+              </div>
+              <input
+                type="file"
+                name="leaked_file"
+                class="opacity-0 absolute"
+                required
+              />
+            </label>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-gradient-to-r from-green-500 to-teal-400 hover:from-green-600 hover:to-teal-500 text-black font-bold py-3 px-4 rounded-lg transition-all transform hover:scale-[1.02] shadow-lg shadow-green-500/20"
+        >
+          <i class="fas fa-user-secret mr-2"></i> Detect Source
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Recent Files Section -->
+  <div class="mt-8 cyber-border rounded-xl p-6">
+    <h3 class="text-xl font-semibold mb-4 flex items-center">
+      <i class="fas fa-history text-blue-400 mr-2"></i>
+      Recent Protected Files
+    </h3>
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="text-left border-b border-gray-700">
+            <th class="pb-3">File Name</th>
+            <th class="pb-3">Date</th>
+            <th class="pb-3">Status</th>
+            <th class="pb-3 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for file in files %}
+          <tr
+            class="border-b border-gray-800 hover:bg-gray-800/50 transition-colors"
+          >
+            <td class="py-3">
+              <div class="flex items-center">
+                <i class="fas fa-file-pdf text-red-400 mr-2"></i>
+                <span>{{ file['original_name'] }}</span>
+              </div>
+            </td>
+            <td>{{ file['uploaded_at'] }}</td>
+            <td>
+              <span
+                class="px-2 py-1 bg-green-900/50 text-green-400 rounded-full text-xs"
+                >Secure</span
+              >
+            </td>
+            <td class="text-right">
+              <a
+                href="/uploads/{{ file['watermarked_name'] }}"
+                class="text-blue-400 hover:text-blue-300 mr-3"
+              >
+                <i class="fas fa-download"></i>
+              </a>
+              <a
+                href="/delete/{{ file['watermarked_name'] }}"
+                class="text-red-400 hover:text-red-300"
+              >
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Animate dashboard elements on load
+    anime({
+      targets: ".cyber-border",
+      opacity: [0, 1],
+      translateY: [20, 0],
+      delay: anime.stagger(100),
+      duration: 800,
+      easing: "easeOutExpo",
+    });
+  });
+</script>
+{% endblock %}
