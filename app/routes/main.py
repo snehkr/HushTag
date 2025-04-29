@@ -33,7 +33,6 @@ def uploaded_file(filename):
 @main_bp.route("/dashboard")
 @login_required
 def dashboard():
-    # print(session)
     user_files = get_user_files(session["user_id"])
     return render_template("dashboard.html", files=user_files)
 

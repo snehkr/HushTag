@@ -33,10 +33,15 @@
               <input
                 type="file"
                 name="file"
+                id="fileInput"
                 class="opacity-0 absolute"
                 required
               />
             </label>
+          </div>
+          <div id="fileNameDisplay" class="mt-2 text-sm text-blue-300 hidden">
+            <i class="fas fa-file mr-1"></i>
+            <span id="selectedFileName"></span>
           </div>
         </div>
         <button
@@ -75,10 +80,18 @@
               <input
                 type="file"
                 name="leaked_file"
+                id="leakFileInput"
                 class="opacity-0 absolute"
                 required
               />
             </label>
+          </div>
+          <div
+            id="leakFileNameDisplay"
+            class="mt-2 text-sm text-green-300 hidden"
+          >
+            <i class="fas fa-file mr-1"></i>
+            <span id="selectedLeakFileName"></span>
           </div>
         </div>
         <button
@@ -157,6 +170,36 @@
       delay: anime.stagger(100),
       duration: 800,
       easing: "easeOutExpo",
+    });
+
+    // Handle file selection display for watermark upload
+    const fileInput = document.getElementById("fileInput");
+    const fileNameDisplay = document.getElementById("fileNameDisplay");
+    const selectedFileName = document.getElementById("selectedFileName");
+
+    fileInput.addEventListener("change", function (e) {
+      if (this.files.length > 0) {
+        selectedFileName.textContent = this.files[0].name;
+        fileNameDisplay.classList.remove("hidden");
+      } else {
+        fileNameDisplay.classList.add("hidden");
+      }
+    });
+
+    // Handle file selection display for leak detection
+    const leakFileInput = document.getElementById("leakFileInput");
+    const leakFileNameDisplay = document.getElementById("leakFileNameDisplay");
+    const selectedLeakFileName = document.getElementById(
+      "selectedLeakFileName"
+    );
+
+    leakFileInput.addEventListener("change", function (e) {
+      if (this.files.length > 0) {
+        selectedLeakFileName.textContent = this.files[0].name;
+        leakFileNameDisplay.classList.remove("hidden");
+      } else {
+        leakFileNameDisplay.classList.add("hidden");
+      }
     });
   });
 </script>

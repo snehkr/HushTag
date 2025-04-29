@@ -2,11 +2,24 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.db import register_user, authenticate_user, log_activity
 from app.utils import login_required
+from functools import wraps
 
 auth_bp = Blueprint("auth", __name__)
 
 
+def redirect_if_logged_in(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "user_id" in session:
+            flash("You are already logged in!", "info")
+            return redirect(url_for("main.dashboard"))
+        return f(*args, **kwargs)
+
+    return decorated_function
+
+
 @auth_bp.route("/login", methods=["GET", "POST"])
+@redirect_if_logged_in
 def login():
     if request.method == "POST":
         username = request.form["username"]
@@ -31,6 +44,7 @@ def login():
 
 
 @auth_bp.route("/register", methods=["GET", "POST"])
+@redirect_if_logged_in
 def register():
     if request.method == "POST":
         username = request.form["username"]

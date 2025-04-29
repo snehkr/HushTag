@@ -97,7 +97,7 @@
             <td>{{ log.username or 'System' }}</td>
             <td>
               <span
-                class="px-2 py-1 rounded-full text-xs {% if log.activity_type == 'login' %}bg-blue-900/50 text-blue-400 {% elif log.activity_type == 'upload' %}bg-purple-900/50 text-purple-400 {% elif log.activity_type == 'error' %}bg-red-900/50 text-red-400 {% else %}bg-black-700 text-black-300{% endif %}"
+                class="px-2 py-1 rounded-full text-xs {% if log.activity_type == 'login' %}bg-blue-900/50 text-blue-400 {% elif log.activity_type == 'logout' %}bg-red-900/50 text-red-400 {% elif log.activity_type == 'upload' %}bg-purple-900/50 text-purple-400 {% elif log.activity_type == 'error' %}bg-red-900/50 text-red-400 {% else %}bg-black-700 text-black-300{% endif %}"
               >
                 {{ log.activity_type }}
               </span>
