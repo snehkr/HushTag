@@ -17,7 +17,13 @@ def login():
             session["user_id"] = user["id"]
             session["username"] = user["username"]
             session["is_admin"] = user.get("is_admin", False)
-            log_activity(user["id"], "login", f"User logged in")
+            log_activity(
+                user["id"],
+                "login",
+                f"User logged in",
+                request.headers.get("User-Agent"),
+                request.remote_addr,
+            )
             flash("Login successful!", "success")
             return redirect(url_for("main.dashboard"))
         flash("Invalid username or password", "danger")
@@ -41,7 +47,13 @@ def register():
 @auth_bp.route("/logout")
 @login_required
 def logout():
-    log_activity(session["user_id"], "logout", "User logged out")
+    log_activity(
+        session["user_id"],
+        "logout",
+        "User logged out",
+        request.headers.get("User-Agent"),
+        request.remote_addr,
+    )
     session.clear()
     flash("You have been logged out.", "info")
     return redirect(url_for("main.index"))

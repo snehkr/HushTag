@@ -97,6 +97,8 @@ def upload_file():
             user_id=session["user_id"],
             activity_type="upload",
             description=f"Uploaded {filename}",
+            user_agent=request.headers.get("User-Agent"),
+            ip_address=request.remote_addr,
         )
 
         # Clean up original file after processing
@@ -141,7 +143,11 @@ def detect_leak():
             if extracted_watermark:
                 leaker = check_leak(extracted_watermark)
                 log_activity(
-                    session["user_id"], "detect", f"Checked {filename} for leaks"
+                    session["user_id"],
+                    "detect",
+                    f"Checked {filename} for leaks",
+                    request.headers.get("User-Agent"),
+                    request.remote_addr,
                 )
                 return render_template(
                     "result.html",

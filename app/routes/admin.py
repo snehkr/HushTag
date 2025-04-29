@@ -10,12 +10,5 @@ admin_bp = Blueprint("admin", __name__)
 @admin_required
 def view_logs():
     logs = get_activity_logs()
-    return render_template("admin_logs.html", logs=logs)
-
-
-@admin_bp.route("/users")
-@login_required
-@admin_required
-def view_users():
     users = get_all_users()
-    return render_template("admin_users.html", users=users)
+    return render_template("admin_logs.html", logs=logs, users=users)

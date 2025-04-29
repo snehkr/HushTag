@@ -3,13 +3,13 @@
   <div class="flex justify-between items-center mb-8">
     <h2 class="text-3xl font-bold flex items-center">
       <i class="fas fa-terminal text-blue-400 mr-3"></i>
-      Admin Dashboard
+      Logs
     </h2>
     <div class="flex space-x-4">
       <button
         class="cyber-border hover:cyber-glow text-black font-bold py-2 px-4 rounded-lg transition-all"
       >
-        <i class="fas fa-sync-alt mr-2"></i> Refresh
+        <i class="fas fa-sync-alt mr-2"></i>
       </button>
       <button
         class="bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-black font-bold py-2 px-4 rounded-lg transition-all transform hover:scale-[1.02] shadow-lg shadow-blue-500/20"
@@ -19,6 +19,57 @@
     </div>
   </div>
 
+  <div class="cyber-border rounded-xl p-6">
+    <h3 class="text-xl font-semibold mb-4 flex items-center">
+      <i class="fas fa-list-ul text-blue-400 mr-2"></i>
+      All Users
+    </h3>
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="text-left border-b border-black-700">
+            <th class="pb-3">Time Stamp</th>
+            <th class="pb-3">Id</th>
+            <th class="pb-3">User</th>
+            <th class="pb-3">Email</th>
+            <th class="pb-3">Admin</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr
+            class="border-b border-black-800 hover:bg-black-800/50 transition-colors"
+          >
+            <td class="py-3">{{ user.created_at or 'N/A' }}</td>
+            <td>{{ user.id}}</td>
+            <td>{{ user.username or 'System' }}</td>
+            <td>{{ user.email or 'N/A' }}</td>
+            <td>{{ user.is_admin }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-4 flex justify-between items-center">
+      <div class="text-black-400 text-sm">
+        Showing {{ users|length }} of 100 Users
+      </div>
+      <div class="flex space-x-2">
+        <button
+          class="cyber-border rounded-lg px-3 py-1 text-sm hover:cyber-glow"
+        >
+          <i class="fas fa-angle-left"></i> Previous
+        </button>
+        <button
+          class="cyber-border rounded-lg px-3 py-1 text-sm hover:cyber-glow"
+        >
+          Next <i class="fas fa-angle-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8"></div>
 
   <div class="cyber-border rounded-xl p-6">
     <h3 class="text-xl font-semibold mb-4 flex items-center">
@@ -29,10 +80,11 @@
       <table class="w-full">
         <thead>
           <tr class="text-left border-b border-black-700">
-            <th class="pb-3">Timestamp</th>
+            <th class="pb-3">Time Stamp</th>
             <th class="pb-3">User</th>
             <th class="pb-3">Activity</th>
             <th class="pb-3">Details</th>
+            <th class="pb-3">User Agent</th>
             <th class="pb-3">IP Address</th>
           </tr>
         </thead>
@@ -41,7 +93,7 @@
           <tr
             class="border-b border-black-800 hover:bg-black-800/50 transition-colors"
           >
-            <td class="py-3"></td>
+            <td class="py-3">{{ log.created_at or 'N/A' }}</td>
             <td>{{ log.username or 'System' }}</td>
             <td>
               <span
@@ -51,7 +103,8 @@
               </span>
             </td>
             <td class="max-w-xs truncate">{{ log.description }}</td>
-            <td>{{ log.ip_address or 'N/A' }}</td>
+            <td class="max-w-xs truncate">{{ log.ip_address or 'N/A' }}</td>
+            <td>{{ log.user_agent or 'N/A' }}</td>
           </tr>
           {% endfor %}
         </tbody>
